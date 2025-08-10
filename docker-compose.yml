@@ -1,12 +1,17 @@
-version: '3.8'
 services:
   backend:
     build: ./backend
+    environment:
+      - ALLOW_MODEL_DOWNLOAD=0
     ports:
       - '8000:8000'
     volumes:
       - ./data:/data
   frontend:
     build: ./frontend
+    environment:
+      - VITE_API_BASE_URL=http://backend:8000/api
     ports:
       - '5173:5173'
+    depends_on:
+      - backend
